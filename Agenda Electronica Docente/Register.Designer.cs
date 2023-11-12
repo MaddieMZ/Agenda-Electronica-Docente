@@ -1,7 +1,7 @@
 ﻿
 namespace Agenda_Electronica_Docente
 {
-    partial class Form1
+    partial class Register
     {
         /// <summary>
         /// Required designer variable.
@@ -29,13 +29,21 @@ namespace Agenda_Electronica_Docente
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // Register
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(564, 441);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "Register";
+            this.Text = "Register";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
     }
 }
-

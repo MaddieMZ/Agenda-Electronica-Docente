@@ -1,0 +1,640 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MonografiasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Defensa">
+          <Key>
+            <PropertyRef Name="IdDef" />
+          </Key>
+          <Property Name="IdDef" Type="int" Nullable="false" />
+          <Property Name="IdMonografia" Type="int" />
+          <Property Name="Nota" Type="int" />
+          <Property Name="Fecha" Type="date" />
+        </EntityType>
+        <EntityType Name="Detalle_Revision_Protocolo">
+          <Key>
+            <PropertyRef Name="IdRev" />
+          </Key>
+          <Property Name="IdRev" Type="int" Nullable="false" />
+          <Property Name="IdDoc_Prof" Type="int" />
+          <Property Name="Observacion" Type="nvarchar" MaxLength="50" />
+          <Property Name="Aprobado" Type="int" />
+        </EntityType>
+        <EntityType Name="Doc_Prof">
+          <Key>
+            <PropertyRef Name="IdDoc_Prof" />
+          </Key>
+          <Property Name="IdDoc_Prof" Type="int" Nullable="false" />
+          <Property Name="IdDoc" Type="int" />
+          <Property Name="IdProf" Type="int" />
+          <Property Name="RolProf" Type="int" />
+          <Property Name="FechaAsignada" Type="date" />
+        </EntityType>
+        <EntityType Name="Documento">
+          <Key>
+            <PropertyRef Name="IdDoc" />
+          </Key>
+          <Property Name="IdDoc" Type="int" Nullable="false" />
+          <Property Name="IdTipo" Type="int" />
+          <Property Name="FechaAsignada" Type="date" />
+          <Property Name="Tema" Type="nvarchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="Est_Doc">
+          <Key>
+            <PropertyRef Name="IdEst_Doc" />
+          </Key>
+          <Property Name="IdEst_Doc" Type="int" Nullable="false" />
+          <Property Name="Carnet" Type="int" />
+          <Property Name="IdDoc" Type="int" />
+        </EntityType>
+        <EntityType Name="Estudiante">
+          <Key>
+            <PropertyRef Name="Carnet" />
+          </Key>
+          <Property Name="Carnet" Type="int" Nullable="false" />
+          <Property Name="Nombres" Type="nvarchar" MaxLength="30" />
+          <Property Name="Apellidos" Type="nvarchar" MaxLength="30" />
+          <Property Name="FechaNac" Type="date" />
+        </EntityType>
+        <EntityType Name="Predefensa">
+          <Key>
+            <PropertyRef Name="IdPredef" />
+          </Key>
+          <Property Name="IdPredef" Type="int" Nullable="false" />
+          <Property Name="IdMonografia" Type="int" />
+          <Property Name="Observacion" Type="nvarchar" MaxLength="50" />
+          <Property Name="Fecha" Type="date" />
+        </EntityType>
+        <EntityType Name="Profesor">
+          <Key>
+            <PropertyRef Name="IdProf" />
+          </Key>
+          <Property Name="IdProf" Type="int" Nullable="false" />
+          <Property Name="FechaNac" Type="date" />
+          <Property Name="Nombres" Type="nvarchar" MaxLength="30" />
+          <Property Name="Apellidos" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="IdRol" />
+          </Key>
+          <Property Name="IdRol" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="TipoDoc">
+          <Key>
+            <PropertyRef Name="IDTipo" />
+          </Key>
+          <Property Name="IDTipo" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="40" />
+        </EntityType>
+        <Association Name="FK__Defensa__IdMonog__6A30C649">
+          <End Role="Documento" Type="Self.Documento" Multiplicity="0..1" />
+          <End Role="Defensa" Type="Self.Defensa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="IdDoc" />
+            </Principal>
+            <Dependent Role="Defensa">
+              <PropertyRef Name="IdMonografia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Detalle_R__IdDoc__6477ECF3">
+          <End Role="Doc_Prof" Type="Self.Doc_Prof" Multiplicity="0..1" />
+          <End Role="Detalle_Revision_Protocolo" Type="Self.Detalle_Revision_Protocolo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doc_Prof">
+              <PropertyRef Name="IdDoc_Prof" />
+            </Principal>
+            <Dependent Role="Detalle_Revision_Protocolo">
+              <PropertyRef Name="IdDoc_Prof" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Doc_Prof__IdDoc__5535A963">
+          <End Role="Documento" Type="Self.Documento" Multiplicity="0..1" />
+          <End Role="Doc_Prof" Type="Self.Doc_Prof" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="IdDoc" />
+            </Principal>
+            <Dependent Role="Doc_Prof">
+              <PropertyRef Name="IdDoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Doc_Prof__IdProf__5629CD9C">
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="0..1" />
+          <End Role="Doc_Prof" Type="Self.Doc_Prof" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="IdProf" />
+            </Principal>
+            <Dependent Role="Doc_Prof">
+              <PropertyRef Name="IdProf" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Doc_Prof__RolPro__571DF1D5">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Doc_Prof" Type="Self.Doc_Prof" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="Doc_Prof">
+              <PropertyRef Name="RolProf" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__IdTip__4222D4EF">
+          <End Role="TipoDoc" Type="Self.TipoDoc" Multiplicity="0..1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDoc">
+              <PropertyRef Name="IDTipo" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="IdTipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Est_Doc__Carnet__4AB81AF0">
+          <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="0..1" />
+          <End Role="Est_Doc" Type="Self.Est_Doc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiante">
+              <PropertyRef Name="Carnet" />
+            </Principal>
+            <Dependent Role="Est_Doc">
+              <PropertyRef Name="Carnet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Est_Doc__IdDoc__4BAC3F29">
+          <End Role="Documento" Type="Self.Documento" Multiplicity="0..1" />
+          <End Role="Est_Doc" Type="Self.Est_Doc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="IdDoc" />
+            </Principal>
+            <Dependent Role="Est_Doc">
+              <PropertyRef Name="IdDoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Predefens__IdMon__6754599E">
+          <End Role="Documento" Type="Self.Documento" Multiplicity="0..1" />
+          <End Role="Predefensa" Type="Self.Predefensa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="IdDoc" />
+            </Principal>
+            <Dependent Role="Predefensa">
+              <PropertyRef Name="IdMonografia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MonografiasModelStoreContainer">
+          <EntitySet Name="Defensa" EntityType="Self.Defensa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Detalle_Revision_Protocolo" EntityType="Self.Detalle_Revision_Protocolo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Doc_Prof" EntityType="Self.Doc_Prof" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Documento" EntityType="Self.Documento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Est_Doc" EntityType="Self.Est_Doc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estudiante" EntityType="Self.Estudiante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Predefensa" EntityType="Self.Predefensa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profesor" EntityType="Self.Profesor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoDoc" EntityType="Self.TipoDoc" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Defensa__IdMonog__6A30C649" Association="Self.FK__Defensa__IdMonog__6A30C649">
+            <End Role="Documento" EntitySet="Documento" />
+            <End Role="Defensa" EntitySet="Defensa" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Detalle_R__IdDoc__6477ECF3" Association="Self.FK__Detalle_R__IdDoc__6477ECF3">
+            <End Role="Doc_Prof" EntitySet="Doc_Prof" />
+            <End Role="Detalle_Revision_Protocolo" EntitySet="Detalle_Revision_Protocolo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Doc_Prof__IdDoc__5535A963" Association="Self.FK__Doc_Prof__IdDoc__5535A963">
+            <End Role="Documento" EntitySet="Documento" />
+            <End Role="Doc_Prof" EntitySet="Doc_Prof" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Doc_Prof__IdProf__5629CD9C" Association="Self.FK__Doc_Prof__IdProf__5629CD9C">
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="Doc_Prof" EntitySet="Doc_Prof" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Doc_Prof__RolPro__571DF1D5" Association="Self.FK__Doc_Prof__RolPro__571DF1D5">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Doc_Prof" EntitySet="Doc_Prof" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__IdTip__4222D4EF" Association="Self.FK__Documento__IdTip__4222D4EF">
+            <End Role="TipoDoc" EntitySet="TipoDoc" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Est_Doc__Carnet__4AB81AF0" Association="Self.FK__Est_Doc__Carnet__4AB81AF0">
+            <End Role="Estudiante" EntitySet="Estudiante" />
+            <End Role="Est_Doc" EntitySet="Est_Doc" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Est_Doc__IdDoc__4BAC3F29" Association="Self.FK__Est_Doc__IdDoc__4BAC3F29">
+            <End Role="Documento" EntitySet="Documento" />
+            <End Role="Est_Doc" EntitySet="Est_Doc" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Predefens__IdMon__6754599E" Association="Self.FK__Predefens__IdMon__6754599E">
+            <End Role="Documento" EntitySet="Documento" />
+            <End Role="Predefensa" EntitySet="Predefensa" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MonografiasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Defensa">
+          <Key>
+            <PropertyRef Name="IdDef" />
+          </Key>
+          <Property Name="IdDef" Type="Int32" Nullable="false" />
+          <Property Name="IdMonografia" Type="Int32" />
+          <Property Name="Nota" Type="Int32" />
+          <Property Name="Fecha" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Documento" Relationship="Self.FK__Defensa__IdMonog__6A30C649" FromRole="Defensa" ToRole="Documento" />
+        </EntityType>
+        <EntityType Name="Detalle_Revision_Protocolo">
+          <Key>
+            <PropertyRef Name="IdRev" />
+          </Key>
+          <Property Name="IdRev" Type="Int32" Nullable="false" />
+          <Property Name="IdDoc_Prof" Type="Int32" />
+          <Property Name="Observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Aprobado" Type="Int32" />
+          <NavigationProperty Name="Doc_Prof" Relationship="Self.FK__Detalle_R__IdDoc__6477ECF3" FromRole="Detalle_Revision_Protocolo" ToRole="Doc_Prof" />
+        </EntityType>
+        <EntityType Name="Doc_Prof">
+          <Key>
+            <PropertyRef Name="IdDoc_Prof" />
+          </Key>
+          <Property Name="IdDoc_Prof" Type="Int32" Nullable="false" />
+          <Property Name="IdDoc" Type="Int32" />
+          <Property Name="IdProf" Type="Int32" />
+          <Property Name="RolProf" Type="Int32" />
+          <Property Name="FechaAsignada" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Detalle_Revision_Protocolo" Relationship="Self.FK__Detalle_R__IdDoc__6477ECF3" FromRole="Doc_Prof" ToRole="Detalle_Revision_Protocolo" />
+          <NavigationProperty Name="Documento" Relationship="Self.FK__Doc_Prof__IdDoc__5535A963" FromRole="Doc_Prof" ToRole="Documento" />
+          <NavigationProperty Name="Profesor" Relationship="Self.FK__Doc_Prof__IdProf__5629CD9C" FromRole="Doc_Prof" ToRole="Profesor" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK__Doc_Prof__RolPro__571DF1D5" FromRole="Doc_Prof" ToRole="Roles" />
+        </EntityType>
+        <EntityType Name="Documento">
+          <Key>
+            <PropertyRef Name="IdDoc" />
+          </Key>
+          <Property Name="IdDoc" Type="Int32" Nullable="false" />
+          <Property Name="IdTipo" Type="Int32" />
+          <Property Name="FechaAsignada" Type="DateTime" Precision="0" />
+          <Property Name="Tema" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Defensa" Relationship="Self.FK__Defensa__IdMonog__6A30C649" FromRole="Documento" ToRole="Defensa" />
+          <NavigationProperty Name="Doc_Prof" Relationship="Self.FK__Doc_Prof__IdDoc__5535A963" FromRole="Documento" ToRole="Doc_Prof" />
+          <NavigationProperty Name="TipoDoc" Relationship="Self.FK__Documento__IdTip__4222D4EF" FromRole="Documento" ToRole="TipoDoc" />
+          <NavigationProperty Name="Est_Doc" Relationship="Self.FK__Est_Doc__IdDoc__4BAC3F29" FromRole="Documento" ToRole="Est_Doc" />
+          <NavigationProperty Name="Predefensa" Relationship="Self.FK__Predefens__IdMon__6754599E" FromRole="Documento" ToRole="Predefensa" />
+        </EntityType>
+        <EntityType Name="Est_Doc">
+          <Key>
+            <PropertyRef Name="IdEst_Doc" />
+          </Key>
+          <Property Name="IdEst_Doc" Type="Int32" Nullable="false" />
+          <Property Name="Carnet" Type="Int32" />
+          <Property Name="IdDoc" Type="Int32" />
+          <NavigationProperty Name="Documento" Relationship="Self.FK__Est_Doc__IdDoc__4BAC3F29" FromRole="Est_Doc" ToRole="Documento" />
+          <NavigationProperty Name="Estudiante" Relationship="Self.FK__Est_Doc__Carnet__4AB81AF0" FromRole="Est_Doc" ToRole="Estudiante" />
+        </EntityType>
+        <EntityType Name="Estudiante">
+          <Key>
+            <PropertyRef Name="Carnet" />
+          </Key>
+          <Property Name="Carnet" Type="Int32" Nullable="false" />
+          <Property Name="Nombres" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Apellidos" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="FechaNac" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Est_Doc" Relationship="Self.FK__Est_Doc__Carnet__4AB81AF0" FromRole="Estudiante" ToRole="Est_Doc" />
+        </EntityType>
+        <EntityType Name="Predefensa">
+          <Key>
+            <PropertyRef Name="IdPredef" />
+          </Key>
+          <Property Name="IdPredef" Type="Int32" Nullable="false" />
+          <Property Name="IdMonografia" Type="Int32" />
+          <Property Name="Observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fecha" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Documento" Relationship="Self.FK__Predefens__IdMon__6754599E" FromRole="Predefensa" ToRole="Documento" />
+        </EntityType>
+        <EntityType Name="Profesor">
+          <Key>
+            <PropertyRef Name="IdProf" />
+          </Key>
+          <Property Name="IdProf" Type="Int32" Nullable="false" />
+          <Property Name="FechaNac" Type="DateTime" Precision="0" />
+          <Property Name="Nombres" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Apellidos" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Doc_Prof" Relationship="Self.FK__Doc_Prof__IdProf__5629CD9C" FromRole="Profesor" ToRole="Doc_Prof" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="IdRol" />
+          </Key>
+          <Property Name="IdRol" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Doc_Prof" Relationship="Self.FK__Doc_Prof__RolPro__571DF1D5" FromRole="Roles" ToRole="Doc_Prof" />
+        </EntityType>
+        <EntityType Name="TipoDoc">
+          <Key>
+            <PropertyRef Name="IDTipo" />
+          </Key>
+          <Property Name="IDTipo" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Documento" Relationship="Self.FK__Documento__IdTip__4222D4EF" FromRole="TipoDoc" ToRole="Documento" />
+        </EntityType>
+        <Association Name="FK__Defensa__IdMonog__6A30C649">
+          <End Role="Documento" Type="Self.Documento" Multiplicity="0..1" />
+          <End Role="Defensa" Type="Self.Defensa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="IdDoc" />
+            </Principal>
+            <Dependent Role="Defensa">
+              <PropertyRef Name="IdMonografia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Detalle_R__IdDoc__6477ECF3">
+          <End Role="Doc_Prof" Type="Self.Doc_Prof" Multiplicity="0..1" />
+          <End Role="Detalle_Revision_Protocolo" Type="Self.Detalle_Revision_Protocolo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doc_Prof">
+              <PropertyRef Name="IdDoc_Prof" />
+            </Principal>
+            <Dependent Role="Detalle_Revision_Protocolo">
+              <PropertyRef Name="IdDoc_Prof" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Doc_Prof__IdDoc__5535A963">
+          <End Role="Documento" Type="Self.Documento" Multiplicity="0..1" />
+          <End Role="Doc_Prof" Type="Self.Doc_Prof" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="IdDoc" />
+            </Principal>
+            <Dependent Role="Doc_Prof">
+              <PropertyRef Name="IdDoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Doc_Prof__IdProf__5629CD9C">
+          <End Role="Profesor" Type="Self.Profesor" Multiplicity="0..1" />
+          <End Role="Doc_Prof" Type="Self.Doc_Prof" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesor">
+              <PropertyRef Name="IdProf" />
+            </Principal>
+            <Dependent Role="Doc_Prof">
+              <PropertyRef Name="IdProf" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Doc_Prof__RolPro__571DF1D5">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Doc_Prof" Type="Self.Doc_Prof" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="Doc_Prof">
+              <PropertyRef Name="RolProf" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__IdTip__4222D4EF">
+          <End Role="TipoDoc" Type="Self.TipoDoc" Multiplicity="0..1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDoc">
+              <PropertyRef Name="IDTipo" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="IdTipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Est_Doc__IdDoc__4BAC3F29">
+          <End Role="Documento" Type="Self.Documento" Multiplicity="0..1" />
+          <End Role="Est_Doc" Type="Self.Est_Doc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="IdDoc" />
+            </Principal>
+            <Dependent Role="Est_Doc">
+              <PropertyRef Name="IdDoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Predefens__IdMon__6754599E">
+          <End Role="Documento" Type="Self.Documento" Multiplicity="0..1" />
+          <End Role="Predefensa" Type="Self.Predefensa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="IdDoc" />
+            </Principal>
+            <Dependent Role="Predefensa">
+              <PropertyRef Name="IdMonografia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Est_Doc__Carnet__4AB81AF0">
+          <End Role="Estudiante" Type="Self.Estudiante" Multiplicity="0..1" />
+          <End Role="Est_Doc" Type="Self.Est_Doc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estudiante">
+              <PropertyRef Name="Carnet" />
+            </Principal>
+            <Dependent Role="Est_Doc">
+              <PropertyRef Name="Carnet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MonografiasEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Defensa" EntityType="Self.Defensa" />
+          <EntitySet Name="Detalle_Revision_Protocolo" EntityType="Self.Detalle_Revision_Protocolo" />
+          <EntitySet Name="Doc_Prof" EntityType="Self.Doc_Prof" />
+          <EntitySet Name="Documento" EntityType="Self.Documento" />
+          <EntitySet Name="Est_Doc" EntityType="Self.Est_Doc" />
+          <EntitySet Name="Estudiante" EntityType="Self.Estudiante" />
+          <EntitySet Name="Predefensa" EntityType="Self.Predefensa" />
+          <EntitySet Name="Profesor" EntityType="Self.Profesor" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="TipoDoc" EntityType="Self.TipoDoc" />
+          <AssociationSet Name="FK__Defensa__IdMonog__6A30C649" Association="Self.FK__Defensa__IdMonog__6A30C649">
+            <End Role="Documento" EntitySet="Documento" />
+            <End Role="Defensa" EntitySet="Defensa" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Detalle_R__IdDoc__6477ECF3" Association="Self.FK__Detalle_R__IdDoc__6477ECF3">
+            <End Role="Doc_Prof" EntitySet="Doc_Prof" />
+            <End Role="Detalle_Revision_Protocolo" EntitySet="Detalle_Revision_Protocolo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Doc_Prof__IdDoc__5535A963" Association="Self.FK__Doc_Prof__IdDoc__5535A963">
+            <End Role="Documento" EntitySet="Documento" />
+            <End Role="Doc_Prof" EntitySet="Doc_Prof" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Doc_Prof__IdProf__5629CD9C" Association="Self.FK__Doc_Prof__IdProf__5629CD9C">
+            <End Role="Profesor" EntitySet="Profesor" />
+            <End Role="Doc_Prof" EntitySet="Doc_Prof" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Doc_Prof__RolPro__571DF1D5" Association="Self.FK__Doc_Prof__RolPro__571DF1D5">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Doc_Prof" EntitySet="Doc_Prof" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__IdTip__4222D4EF" Association="Self.FK__Documento__IdTip__4222D4EF">
+            <End Role="TipoDoc" EntitySet="TipoDoc" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Est_Doc__IdDoc__4BAC3F29" Association="Self.FK__Est_Doc__IdDoc__4BAC3F29">
+            <End Role="Documento" EntitySet="Documento" />
+            <End Role="Est_Doc" EntitySet="Est_Doc" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Predefens__IdMon__6754599E" Association="Self.FK__Predefens__IdMon__6754599E">
+            <End Role="Documento" EntitySet="Documento" />
+            <End Role="Predefensa" EntitySet="Predefensa" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Est_Doc__Carnet__4AB81AF0" Association="Self.FK__Est_Doc__Carnet__4AB81AF0">
+            <End Role="Estudiante" EntitySet="Estudiante" />
+            <End Role="Est_Doc" EntitySet="Est_Doc" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MonografiasModelStoreContainer" CdmEntityContainer="MonografiasEntities1">
+          <EntitySetMapping Name="Defensa">
+            <EntityTypeMapping TypeName="MonografiasModel.Defensa">
+              <MappingFragment StoreEntitySet="Defensa">
+                <ScalarProperty Name="IdDef" ColumnName="IdDef" />
+                <ScalarProperty Name="IdMonografia" ColumnName="IdMonografia" />
+                <ScalarProperty Name="Nota" ColumnName="Nota" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Detalle_Revision_Protocolo">
+            <EntityTypeMapping TypeName="MonografiasModel.Detalle_Revision_Protocolo">
+              <MappingFragment StoreEntitySet="Detalle_Revision_Protocolo">
+                <ScalarProperty Name="IdRev" ColumnName="IdRev" />
+                <ScalarProperty Name="IdDoc_Prof" ColumnName="IdDoc_Prof" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="Aprobado" ColumnName="Aprobado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Doc_Prof">
+            <EntityTypeMapping TypeName="MonografiasModel.Doc_Prof">
+              <MappingFragment StoreEntitySet="Doc_Prof">
+                <ScalarProperty Name="IdDoc_Prof" ColumnName="IdDoc_Prof" />
+                <ScalarProperty Name="IdDoc" ColumnName="IdDoc" />
+                <ScalarProperty Name="IdProf" ColumnName="IdProf" />
+                <ScalarProperty Name="RolProf" ColumnName="RolProf" />
+                <ScalarProperty Name="FechaAsignada" ColumnName="FechaAsignada" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documento">
+            <EntityTypeMapping TypeName="MonografiasModel.Documento">
+              <MappingFragment StoreEntitySet="Documento">
+                <ScalarProperty Name="IdDoc" ColumnName="IdDoc" />
+                <ScalarProperty Name="IdTipo" ColumnName="IdTipo" />
+                <ScalarProperty Name="FechaAsignada" ColumnName="FechaAsignada" />
+                <ScalarProperty Name="Tema" ColumnName="Tema" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Est_Doc">
+            <EntityTypeMapping TypeName="MonografiasModel.Est_Doc">
+              <MappingFragment StoreEntitySet="Est_Doc">
+                <ScalarProperty Name="IdEst_Doc" ColumnName="IdEst_Doc" />
+                <ScalarProperty Name="Carnet" ColumnName="Carnet" />
+                <ScalarProperty Name="IdDoc" ColumnName="IdDoc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estudiante">
+            <EntityTypeMapping TypeName="MonografiasModel.Estudiante">
+              <MappingFragment StoreEntitySet="Estudiante">
+                <ScalarProperty Name="Carnet" ColumnName="Carnet" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="FechaNac" ColumnName="FechaNac" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Predefensa">
+            <EntityTypeMapping TypeName="MonografiasModel.Predefensa">
+              <MappingFragment StoreEntitySet="Predefensa">
+                <ScalarProperty Name="IdPredef" ColumnName="IdPredef" />
+                <ScalarProperty Name="IdMonografia" ColumnName="IdMonografia" />
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profesor">
+            <EntityTypeMapping TypeName="MonografiasModel.Profesor">
+              <MappingFragment StoreEntitySet="Profesor">
+                <ScalarProperty Name="IdProf" ColumnName="IdProf" />
+                <ScalarProperty Name="FechaNac" ColumnName="FechaNac" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="MonografiasModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoDoc">
+            <EntityTypeMapping TypeName="MonografiasModel.TipoDoc">
+              <MappingFragment StoreEntitySet="TipoDoc">
+                <ScalarProperty Name="IDTipo" ColumnName="IDTipo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
